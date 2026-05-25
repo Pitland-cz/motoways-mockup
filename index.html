@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Motoways - Screen Flow</title>
+    <title>Motoways - Domů</title>
     <style>
         * {
             margin: 0;
@@ -13,363 +13,245 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: #0a0a0a;
-            color: #fff;
-            padding: 40px 20px;
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .title {
-            text-align: center;
-            margin-bottom: 10px;
-        }
-
-        .main-title {
-            font-size: 48px;
-            font-weight: 900;
-            color: #D4FF00;
-            margin-bottom: 10px;
-        }
-
-        .subtitle {
-            font-size: 18px;
-            color: #999;
-            margin-bottom: 50px;
-        }
-
-        .flow-diagram {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 30px;
-            margin-bottom: 60px;
-        }
-
-        .screen-card {
             background: #1a1a1a;
-            border: 2px solid #2a2a2a;
-            border-radius: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
             padding: 20px;
-            text-align: center;
+        }
+
+        .phone-frame {
+            width: 375px;
+            height: 812px;
+            background: #0a0a0a;
+            border-radius: 40px;
+            padding: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
             position: relative;
-            transition: all 0.3s;
-            text-decoration: none;
-            color: inherit;
-            display: block;
-            cursor: pointer;
+            overflow: hidden;
         }
 
-        .screen-card:hover {
-            border-color: #D4FF00;
-            transform: translateY(-5px);
-        }
-
-        .screen-number {
-            background: #D4FF00;
-            color: #0a0a0a;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
+        .status-bar {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 900;
-            font-size: 20px;
-            margin: 0 auto 15px;
-        }
-
-        .screen-preview {
-            width: 100%;
-            height: 200px;
-            background: #0a0a0a;
-            border-radius: 12px;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 48px;
-            border: 1px solid #2a2a2a;
-        }
-
-        .screen-title {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 8px;
+            justify-content: space-between;
+            padding: 10px 0;
             color: #fff;
-        }
-
-        .screen-desc {
             font-size: 13px;
-            color: #999;
-            line-height: 1.5;
         }
 
-        .arrow {
-            position: absolute;
-            top: 50%;
-            right: -35px;
-            transform: translateY(-50%);
-            font-size: 24px;
-            color: #D4FF00;
-            z-index: 10;
+        .brand-header {
+            text-align: center;
+            padding: 30px 20px;
+            background: linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 100%);
         }
 
-        .screen-card:last-child .arrow {
-            display: none;
-        }
-
-        .features-section {
-            background: #1a1a1a;
-            border-radius: 20px;
-            padding: 40px;
-            margin-bottom: 40px;
-        }
-
-        .section-title {
-            font-size: 28px;
+        .logo {
+            font-size: 32px;
             font-weight: 800;
-            margin-bottom: 30px;
-            color: #D4FF00;
+            color: #fff;
+            letter-spacing: -1px;
+            margin-bottom: 8px;
         }
 
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
+        .tagline {
+            font-size: 12px;
+            color: #999;
+            letter-spacing: 0.5px;
         }
 
-        .feature-card {
-            background: #0a0a0a;
-            padding: 24px;
+        .main-cta {
+            margin: 30px 20px;
+            background: linear-gradient(135deg, #D4FF00 0%, #B8E600 100%);
+            color: #0a0a0a;
+            padding: 28px;
+            border-radius: 20px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            box-shadow: 0 10px 30px rgba(212, 255, 0, 0.3);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .main-cta:hover {
+            transform: scale(1.02);
+        }
+
+        .last-ride {
+            margin: 20px;
+            background: #1a1a1a;
             border-radius: 16px;
+            padding: 20px;
             border: 1px solid #2a2a2a;
         }
 
-        .feature-icon {
-            font-size: 36px;
-            margin-bottom: 12px;
+        .last-ride-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
         }
 
-        .feature-title {
-            font-size: 16px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: #fff;
-        }
-
-        .feature-desc {
+        .last-ride-title {
             font-size: 14px;
             color: #999;
-            line-height: 1.6;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .brand-section {
-            background: #1a1a1a;
-            border-radius: 20px;
-            padding: 40px;
-            text-align: center;
-        }
-
-        .brand-logo {
-            font-size: 64px;
-            font-weight: 900;
-            color: #D4FF00;
-            margin-bottom: 15px;
-        }
-
-        .brand-tagline {
-            font-size: 20px;
-            color: #999;
-            margin-bottom: 30px;
-        }
-
-        .brand-colors {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 30px;
-        }
-
-        .color-swatch {
-            width: 80px;
-            height: 80px;
-            border-radius: 12px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            font-size: 11px;
-            font-weight: 700;
-        }
-
-        .color-lime {
-            background: #D4FF00;
-            color: #0a0a0a;
-        }
-
-        .color-black {
-            background: #0a0a0a;
-            color: #D4FF00;
-            border: 2px solid #D4FF00;
-        }
-
-        .color-dark {
-            background: #1a1a1a;
-            color: #fff;
-            border: 2px solid #2a2a2a;
-        }
-
-        .feedback-section {
+        .flow-score {
             background: linear-gradient(135deg, #D4FF00 0%, #B8E600 100%);
-            border-radius: 20px;
-            padding: 40px;
-            margin-top: 40px;
             color: #0a0a0a;
-        }
-
-        .feedback-title {
-            font-size: 24px;
+            padding: 6px 14px;
+            border-radius: 20px;
             font-weight: 800;
-            margin-bottom: 20px;
+            font-size: 16px;
         }
 
-        .feedback-list {
+        .ride-stats {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
+            margin-top: 15px;
         }
 
-        .feedback-item {
-            background: rgba(0,0,0,0.1);
-            padding: 15px;
+        .stat {
+            background: #0a0a0a;
+            padding: 12px;
             border-radius: 12px;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: #666;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .stat-value {
+            font-size: 20px;
+            color: #fff;
+            font-weight: 700;
+        }
+
+        .route-name {
+            color: #fff;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .ride-date {
+            color: #666;
+            font-size: 13px;
+        }
+
+        .secondary-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 20px;
+        }
+
+        .action-btn {
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            color: #fff;
+            padding: 16px;
+            border-radius: 12px;
+            text-align: center;
             font-size: 14px;
             font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
         }
 
-        .feedback-item::before {
-            content: '✓ ';
-            font-weight: 900;
+        .action-btn:hover {
+            background: #2a2a2a;
+            border-color: #3a3a3a;
         }
+
+        .action-icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        a { text-decoration: none; color: inherit; display: block; }
+
+        .flow-link {
+            position: fixed;
+            bottom: 16px;
+            right: 16px;
+            background: rgba(26,26,26,0.7);
+            color: #666;
+            border: 1px solid #2a2a2a;
+            padding: 6px 12px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            text-decoration: none;
+            z-index: 100;
+        }
+        .flow-link:hover { color: #D4FF00; border-color: #D4FF00; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="title">
-            <div class="main-title">MOTOWAYS APP V2</div>
-            <div class="subtitle">Vizuální mockup — Board Review Artifact (WAY-842)</div>
+    <div class="phone-frame">
+        <div class="status-bar">
+            <span>9:41</span>
+            <span>●●●●● 100%</span>
         </div>
 
-        <div class="flow-diagram">
-            <a class="screen-card" href="01-home.html">
-                <div class="screen-number">1</div>
-                <div class="screen-preview">🏠</div>
-                <div class="screen-title">HOME / Menu</div>
-                <div class="screen-desc">Menu-first přístup, brand header, hlavní CTA "KAM DNES", poslední jízda</div>
-                <div class="arrow">→</div>
-            </a>
-
-            <a class="screen-card" href="02-map.html">
-                <div class="screen-number">2</div>
-                <div class="screen-preview">🗺️</div>
-                <div class="screen-title">MAP / Navigation</div>
-                <div class="screen-desc">Reálná pouliční mapa, GPS pozice, Quality Kilometers, Hazards overlay</div>
-                <div class="arrow">→</div>
-            </a>
-
-            <a class="screen-card" href="03-planner.html">
-                <div class="screen-number">3</div>
-                <div class="screen-preview">📍</div>
-                <div class="screen-title">PLANNER</div>
-                <div class="screen-desc">Plánování trasy, filtry, waypoints, náhled Flow Score</div>
-                <div class="arrow">→</div>
-            </a>
-
-            <a class="screen-card" href="04-hud.html">
-                <div class="screen-number">4</div>
-                <div class="screen-preview">🏍️</div>
-                <div class="screen-title">IN-RIDE HUD</div>
-                <div class="screen-desc">Glanceable navigace, velké fonty, next-turn, hazard banner</div>
-                <div class="arrow">→</div>
-            </a>
-
-            <a class="screen-card" href="05-flow-summary.html">
-                <div class="screen-number">5</div>
-                <div class="screen-preview">✨</div>
-                <div class="screen-title">FLOW SUMMARY</div>
-                <div class="screen-desc">Flow Score centrálně, breakdown jízdy, sdílení do komunity</div>
-            </a>
+        <div class="brand-header">
+            <div class="logo">MOTOWAYS</div>
+            <div class="tagline">Navigace pro motorkáře. Komunita. Flow.</div>
         </div>
 
-        <div class="feedback-section">
-            <div class="feedback-title">Board Feedback Zapracován (builds 42–44)</div>
-            <div class="feedback-list">
-                <div class="feedback-item">Menu-first, ne map-first</div>
-                <div class="feedback-item">Reálná pouliční mapa s GPS</div>
-                <div class="feedback-item">Viditelné názvy obcí a silnic</div>
-                <div class="feedback-item">Quality Kilometers overlay</div>
-                <div class="feedback-item">Hazards na mapě</div>
-                <div class="feedback-item">Flow elements vizualizace</div>
+        <a class="main-cta" href="02-map.html">
+            KAM DNES
+        </a>
+
+        <a class="last-ride" href="05-flow-summary.html" style="cursor:pointer;">
+            <div class="last-ride-header">
+                <div class="last-ride-title">Poslední jízda</div>
+                <div class="flow-score">92</div>
             </div>
-        </div>
-
-        <div class="features-section">
-            <div class="section-title">Klíčové Features</div>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">🎯</div>
-                    <div class="feature-title">Quality Kilometers</div>
-                    <div class="feature-desc">Barevné zvýraznění kvalitních silnic podle skóre — žlutozelený gradient</div>
+            <div class="route-name">Křivoklátsko Loop</div>
+            <div class="ride-date">23. května 2026</div>
+            <div class="ride-stats">
+                <div class="stat">
+                    <div class="stat-label">Vzdálenost</div>
+                    <div class="stat-value">124 km</div>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon">⚠️</div>
-                    <div class="feature-title">Hazards Overlay</div>
-                    <div class="feature-desc">Nahlášená rizika na mapě i v HUD — audio-bez-touch</div>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">〰️</div>
-                    <div class="feature-title">Flow Elements</div>
-                    <div class="feature-desc">Vizuální stopa Flow — plynulý vs. trhaný úsek</div>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🏍️</div>
-                    <div class="feature-title">Glanceable HUD</div>
-                    <div class="feature-desc">Velké fonty, čitelné v slunci a rukavicích</div>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <div class="feature-title">Flow Score</div>
-                    <div class="feature-desc">Centrální metrika zážitku — ne fitness, ale flow</div>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🗺️</div>
-                    <div class="feature-title">Inteligentní Planner</div>
-                    <div class="feature-desc">Filtry: kvalita silnic, čas, km, typ silnic</div>
+                <div class="stat">
+                    <div class="stat-label">Čas</div>
+                    <div class="stat-value">2h 15m</div>
                 </div>
             </div>
-        </div>
+        </a>
 
-        <div class="brand-section">
-            <div class="brand-logo">MOTOWAYS</div>
-            <div class="brand-tagline">Navigace pro motorkáře. Komunita. Flow.</div>
-            <div class="brand-colors">
-                <div class="color-swatch color-lime">
-                    <div>LIME</div>
-                    <div>#D4FF00</div>
-                </div>
-                <div class="color-swatch color-black">
-                    <div>BLACK</div>
-                    <div>#0a0a0a</div>
-                </div>
-                <div class="color-swatch color-dark">
-                    <div>DARK</div>
-                    <div>#1a1a1a</div>
-                </div>
-            </div>
+        <div class="secondary-actions">
+            <a class="action-btn" href="03-planner.html">
+                <div class="action-icon">🗺️</div>
+                <div>Plánovač</div>
+            </a>
+            <a class="action-btn" href="05-flow-summary.html">
+                <div class="action-icon">📊</div>
+                <div>Historie</div>
+            </a>
+            <a class="action-btn" href="index.html">
+                <div class="action-icon">👥</div>
+                <div>Komunita</div>
+            </a>
+            <a class="action-btn" href="index.html">
+                <div class="action-icon">⚙️</div>
+                <div>Nastavení</div>
+            </a>
         </div>
     </div>
+    <a class="flow-link" href="flow.html">Mapa obrazovek →</a>
 </body>
 </html>

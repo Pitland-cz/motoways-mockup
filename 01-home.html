@@ -180,26 +180,25 @@
 
         a { text-decoration: none; color: inherit; display: block; }
 
-        .overview-pill {
+        .flow-link {
             position: fixed;
-            top: 16px;
-            left: 16px;
-            background: #1a1a1a;
-            color: #D4FF00;
+            bottom: 16px;
+            right: 16px;
+            background: rgba(26,26,26,0.7);
+            color: #666;
             border: 1px solid #2a2a2a;
-            padding: 8px 14px;
+            padding: 6px 12px;
             border-radius: 999px;
-            font-size: 12px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
             text-decoration: none;
             z-index: 100;
         }
-        .overview-pill:hover { background: #2a2a2a; }
+        .flow-link:hover { color: #D4FF00; border-color: #D4FF00; }
     </style>
 </head>
 <body>
-    <a class="overview-pill" href="index.html">← Přehled</a>
     <div class="phone-frame">
         <div class="status-bar">
             <span>9:41</span>
@@ -253,5 +252,6 @@
             </a>
         </div>
     </div>
+    <a class="flow-link" href="flow.html">Mapa obrazovek →</a>
 </body>
 </html>

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Motoways - Navigace</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #1a1a1a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .phone-frame {
+            width: 375px;
+            height: 812px;
+            background: #0a0a0a;
+            border-radius: 40px;
+            padding: 0;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hud-container {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 40px 20px 30px;
+        }
+
+        /* Next turn band - dominant visual */
+        .next-turn {
+            background: linear-gradient(135deg, #D4FF00 0%, #B8E600 100%);
+            border-radius: 24px;
+            padding: 32px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(212, 255, 0, 0.3);
+        }
+
+        .turn-arrow {
+            font-size: 80px;
+            margin-bottom: 16px;
+            line-height: 1;
+        }
+
+        .turn-distance {
+            font-size: 56px;
+            font-weight: 900;
+            color: #0a0a0a;
+            line-height: 1;
+            margin-bottom: 12px;
+        }
+
+        .turn-street {
+            font-size: 20px;
+            font-weight: 700;
+            color: #0a0a0a;
+            margin-top: 8px;
+        }
+
+        /* Hazard banner */
+        .hazard-banner {
+            background: #ff4444;
+            color: #fff;
+            padding: 16px 20px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 20px 0;
+            box-shadow: 0 4px 20px rgba(255, 68, 68, 0.4);
+        }
+
+        .hazard-icon {
+            font-size: 28px;
+        }
+
+        .hazard-text {
+            flex: 1;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        /* Stats grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .stat-card {
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-radius: 16px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 900;
+            color: #fff;
+            line-height: 1;
+        }
+
+        .stat-unit {
+            font-size: 14px;
+            color: #666;
+            margin-top: 4px;
+        }
+
+        /* Route info */
+        .route-info {
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .route-name {
+            font-size: 16px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+
+        .route-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .route-stat {
+            font-size: 13px;
+            color: #999;
+        }
+
+        .route-stat strong {
+            color: #D4FF00;
+            font-weight: 700;
+        }
+
+        /* Intersection visual */
+        .intersection-preview {
+            background: #1a1a1a;
+            border-radius: 16px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .intersection-label {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+
+        .intersection-diagram {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto;
+            position: relative;
+            background: #0a0a0a;
+            border-radius: 8px;
+        }
+
+        .road-h, .road-v {
+            position: absolute;
+            background: #2a2a2a;
+        }
+
+        .road-h {
+            width: 100%;
+            height: 30%;
+            top: 35%;
+        }
+
+        .road-v {
+            width: 30%;
+            height: 100%;
+            left: 35%;
+        }
+
+        .turn-indicator {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 32px;
+        }
+
+        /* Control buttons */
+        .controls {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .control-btn {
+            flex: 1;
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            color: #fff;
+            padding: 16px;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .control-btn.danger {
+            background: #ff4444;
+            border-color: #ff4444;
+        }
+
+        a { text-decoration: none; color: inherit; }
+
+        .overview-pill {
+            position: fixed;
+            top: 16px;
+            left: 16px;
+            background: #1a1a1a;
+            color: #D4FF00;
+            border: 1px solid #2a2a2a;
+            padding: 8px 14px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            z-index: 500;
+        }
+        .overview-pill:hover { background: #2a2a2a; }
+
+        .home-pill {
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            background: #1a1a1a;
+            color: #fff;
+            border: 1px solid #2a2a2a;
+            padding: 8px 14px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 700;
+            z-index: 500;
+        }
+        .home-pill:hover { background: #2a2a2a; }
+    </style>
+</head>
+<body>
+    <a class="overview-pill" href="index.html">← Přehled</a>
+    <a class="home-pill" href="01-home.html">🏠 Domů</a>
+    <div class="phone-frame">
+        <div class="hud-container">
+            <div>
+                <div class="next-turn">
+                    <div class="turn-arrow">↰</div>
+                    <div class="turn-distance">350 m</div>
+                    <div class="turn-street">Zahni doleva na Hlavní ulici</div>
+                </div>
+
+                <div class="hazard-banner">
+                    <div class="hazard-icon">⚠️</div>
+                    <div class="hazard-text">Pozor: Štěrk na vozovce za 800 m</div>
+                </div>
+
+                <div class="intersection-preview">
+                    <div class="intersection-label">Náhled křižovatky</div>
+                    <div class="intersection-diagram">
+                        <div class="road-h"></div>
+                        <div class="road-v"></div>
+                        <div class="turn-indicator">↰</div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">Rychlost</div>
+                        <div class="stat-value">85</div>
+                        <div class="stat-unit">km/h</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">ETA</div>
+                        <div class="stat-value">11:45</div>
+                        <div class="stat-unit">hod</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Zbývá</div>
+                        <div class="stat-value">47</div>
+                        <div class="stat-unit">km</div>
+                    </div>
+                </div>
+
+                <div class="route-info">
+                    <div class="route-name">Křivoklátsko Loop</div>
+                    <div class="route-stats">
+                        <div class="route-stat">Flow: <strong>92</strong></div>
+                        <div class="route-stat">Kvalita: <strong>85%</strong></div>
+                        <div class="route-stat">Čas: <strong>1h 28m</strong></div>
+                    </div>
+                </div>
+
+                <div class="controls">
+                    <a class="control-btn" href="01-home.html">⏸ Pauza</a>
+                    <a class="control-btn danger" href="05-flow-summary.html">■ Ukončit</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

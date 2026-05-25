@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Motoways - Flow Summary</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #1a1a1a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .phone-frame {
+            width: 375px;
+            height: 812px;
+            background: #0a0a0a;
+            border-radius: 40px;
+            padding: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            color: #fff;
+            font-size: 13px;
+        }
+
+        .header {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .header-title {
+            font-size: 14px;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Flow Score - hero element */
+        .flow-score-hero {
+            text-align: center;
+            padding: 40px 20px;
+            margin: 20px 0;
+        }
+
+        .score-label {
+            font-size: 13px;
+            color: #999;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .score-circle {
+            width: 180px;
+            height: 180px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #D4FF00 0%, #B8E600 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 20px 60px rgba(212, 255, 0, 0.4);
+            position: relative;
+        }
+
+        .score-circle::before {
+            content: '';
+            position: absolute;
+            inset: 12px;
+            background: #0a0a0a;
+            border-radius: 50%;
+        }
+
+        .score-number {
+            font-size: 72px;
+            font-weight: 900;
+            color: #D4FF00;
+            position: relative;
+            z-index: 1;
+        }
+
+        .score-badge {
+            background: linear-gradient(135deg, #D4FF00 0%, #B8E600 100%);
+            color: #0a0a0a;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 15px;
+            font-weight: 800;
+            display: inline-block;
+        }
+
+        /* Route map */
+        .route-map {
+            background: #e8e4d9;
+            height: 140px;
+            border-radius: 16px;
+            margin: 20px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .map-route {
+            position: absolute;
+            top: 50%;
+            left: 20px;
+            right: 20px;
+            height: 4px;
+            background: linear-gradient(90deg, #4A90E2 0%, #D4FF00 30%, #B8E600 50%, #D4FF00 70%, #4A90E2 100%);
+            transform: translateY(-50%);
+            border-radius: 2px;
+        }
+
+        .route-point {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: #4A90E2;
+            border: 3px solid #fff;
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .route-point.start { left: 20px; }
+        .route-point.end { right: 20px; }
+
+        /* Breakdown stats */
+        .breakdown {
+            background: #1a1a1a;
+            border-radius: 16px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .breakdown-title {
+            font-size: 14px;
+            color: #999;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .breakdown-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #2a2a2a;
+        }
+
+        .breakdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .breakdown-label {
+            font-size: 15px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .breakdown-icon {
+            font-size: 20px;
+        }
+
+        .breakdown-value {
+            font-size: 16px;
+            font-weight: 700;
+            color: #D4FF00;
+        }
+
+        /* Quality bar */
+        .quality-bar {
+            height: 6px;
+            background: #2a2a2a;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+
+        .quality-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #D4FF00 0%, #B8E600 100%);
+            width: 85%;
+        }
+
+        /* Action buttons */
+        .actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 16px;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .action-btn.primary {
+            background: linear-gradient(135deg, #D4FF00 0%, #B8E600 100%);
+            color: #0a0a0a;
+            box-shadow: 0 8px 24px rgba(212, 255, 0, 0.25);
+        }
+
+        .action-btn.secondary {
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            color: #fff;
+        }
+
+        a { text-decoration: none; color: inherit; }
+
+        .overview-pill {
+            position: fixed;
+            top: 16px;
+            left: 16px;
+            background: #1a1a1a;
+            color: #D4FF00;
+            border: 1px solid #2a2a2a;
+            padding: 8px 14px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            z-index: 500;
+        }
+        .overview-pill:hover { background: #2a2a2a; }
+
+        .home-pill {
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            background: #1a1a1a;
+            color: #fff;
+            border: 1px solid #2a2a2a;
+            padding: 8px 14px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 700;
+            z-index: 500;
+        }
+        .home-pill:hover { background: #2a2a2a; }
+    </style>
+</head>
+<body>
+    <a class="overview-pill" href="index.html">← Přehled</a>
+    <a class="home-pill" href="01-home.html">🏠 Domů</a>
+    <div class="phone-frame">
+        <div class="status-bar">
+            <span>9:41</span>
+            <span>●●●●● 100%</span>
+        </div>
+
+        <div class="header">
+            <div class="header-title">Jízda dokončena</div>
+        </div>
+
+        <div class="flow-score-hero">
+            <div class="score-label">Tvůj Flow Score</div>
+            <div class="score-circle">
+                <div class="score-number">92</div>
+            </div>
+            <div class="score-badge">Skvělá jízda! 🏍️</div>
+        </div>
+
+        <div class="route-map">
+            <div class="map-route"></div>
+            <div class="route-point start"></div>
+            <div class="route-point end"></div>
+        </div>
+
+        <div class="breakdown">
+            <div class="breakdown-title">Shrnutí</div>
+            <div class="breakdown-item">
+                <div class="breakdown-label">
+                    <span class="breakdown-icon">📏</span>
+                    <span>Celková vzdálenost</span>
+                </div>
+                <div class="breakdown-value">124 km</div>
+            </div>
+            <div class="breakdown-item">
+                <div class="breakdown-label">
+                    <span class="breakdown-icon">⏱️</span>
+                    <span>Čas jízdy</span>
+                </div>
+                <div class="breakdown-value">2h 15m</div>
+            </div>
+            <div class="breakdown-item">
+                <div class="breakdown-label">
+                    <span class="breakdown-icon">✨</span>
+                    <span>Kvalitní kilometry</span>
+                </div>
+                <div class="breakdown-value">105 km</div>
+            </div>
+            <div class="breakdown-item">
+                <div class="breakdown-label">
+                    <span class="breakdown-icon">⚠️</span>
+                    <span>Rizika na trase</span>
+                </div>
+                <div class="breakdown-value">3</div>
+            </div>
+            <div class="breakdown-item">
+                <div class="breakdown-label">
+                    <span class="breakdown-icon">〰️</span>
+                    <span>Plynulost jízdy</span>
+                </div>
+                <div class="breakdown-value">95%</div>
+            </div>
+        </div>
+
+        <div class="breakdown">
+            <div class="breakdown-title">Kvalita silnic</div>
+            <div class="quality-bar">
+                <div class="quality-fill"></div>
+            </div>
+        </div>
+
+        <div class="actions">
+            <a class="action-btn secondary" href="01-home.html" style="display:block;text-align:center;">Sdílet</a>
+            <a class="action-btn primary" href="03-planner.html" style="display:block;text-align:center;">Naplánovat další</a>
+        </div>
+    </div>
+</body>
+</html>
